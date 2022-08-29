@@ -51,18 +51,18 @@ public:
   void and8xy2(uate Vx, uate Vy);
   void xor8xy3(uate Vx, uate Vy);
   void add8xy4(uate Vx, uate Vy);
-  void sub8xy5();
-  void shr8xy6();
-  void subn8xy7();
-  void shl8xyE();
+  void sub8xy5(uate Vx, uate Vy);
+  void shr8xy6(uate Vx, uate Vy);
+  void subn8xy7(uate Vx, uate Vy);
+  void shl8xyE(uate Vx, uate Vy);
   // 9
-  void sne9xy0();
+  void sne9xy0(uate Vx, uate Vy);
   // A
-  void ldAnnn();
+  void ldAnnn(usix nnn);
   // B
-  void jpBnnn();
+  void jpBnnn(usix nnn);
   // C
-  void rndCxkk();
+  void rndCxkk(uate Vx, uate kk);
   // D
   void drwDxyn();
   // E

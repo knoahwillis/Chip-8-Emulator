@@ -1,4 +1,6 @@
 #include "Interpreter.hpp"
+#include <random>
+#include <ctime>
 
 Interpreter::Interpreter(uate *memory, uate *V, usix *I, uate *delay,
                          uate *sound, usix *programCounter, uate *stackPointer,
@@ -79,6 +81,62 @@ void Interpreter::xor8xy3(uate Vx, uate Vy) {
 
 void Interpreter::add8xy4(uate Vx, uate Vy) {
   if(Vx + Vy > 0xFF) {
-    
+    *(V + 0xF) = 1;
+    *(V + Vx) = 0xFF;
+  }else {
+    *(V + Vx) += *(V + Vy);
   }
 }
+
+void Interpreter::sub8xy5(uate Vx, uate Vy) {
+  if(*(V + Vx) > *(V + Vy)) {
+    *(V + 0xF) = 1;
+  }
+  else {
+    *(V + 0xF) = 0;
+  }
+  *(V + Vx) -= *(V + Vy);
+}
+
+void Interpreter::shr8xy6(uate Vx, uate Vy) {
+  uate checker = *(V + Vx) & 0x1;
+  *(V + 0xF) = checker;
+  *(V + Vx) = *(V + Vx) / 2;
+}
+
+void Interpreter::subn8xy7(uate Vx, uate Vy) {
+  if(*(V + Vy) > *(V + Vx)) {
+    *(V + 0xF) = 1;
+  }
+  else {
+    *(V + 0xF) = 0;
+  }
+  *(V + Vx) = *(V + Vy) - *(V + Vx);
+}
+
+void Interpreter::shl8xyE(uate Vx, uate Vy) {
+  uate checker = (*(V + Vx) >> 7) & 0x1;
+  *(V + 0xF) = checker;
+  *(V + Vx) = *(V + Vx) * 2;
+}
+
+void Interpreter::sne9xy0(uate Vx, uate Vy) {
+  if(*(V + Vx) != *(V + Vy)) {
+    *programCounter += 2;
+  }
+}
+
+void Interpreter::ldAnnn(usix nnn) {
+  *I = nnn; 
+}
+
+void Interpreter::jpBnnn(usix nnn) {
+  *programCounter = nnn + *V;
+}
+
+void Interpreter::rndCxkk(uate Vx, uate kk) {
+  srand(time(0));
+  uate rando = rand() % 255;
+  *(V + Vx) = rando & kk; 
+}
+
