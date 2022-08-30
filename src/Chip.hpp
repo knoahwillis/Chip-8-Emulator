@@ -19,6 +19,7 @@ protected:
   usix stack[16]; // stores the addresses that the interpreter shoudl return to
                   // after finishing a subroutine
   Display *display;
+  Interpreter *interpreter;
 
 public:
   Chip();

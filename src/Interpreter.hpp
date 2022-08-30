@@ -21,7 +21,7 @@ protected:
 
   Display *display;
 
-protected:
+public:
   Interpreter(uate *memory, uate *V, usix *I, uate *delay, uate *sound,
               usix *programCounter, uate *stackPointer, usix *stack,
               Display *display);

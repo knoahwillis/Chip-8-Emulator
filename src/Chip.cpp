@@ -4,6 +4,9 @@
 Chip::Chip() {
 
   display = new Display;
+  interpreter = new Interpreter(&memory[0], &V[0], &I, &delay,
+                         &sound, &programCounter, &stackPointer,
+                         &stack[0], display);
 
   delay = 0;
   sound = 0;
@@ -34,8 +37,13 @@ Chip::Chip() {
 }
 
 Chip::~Chip() {
-
-
-
   delete display;
+  delete interpreter;
+}
+
+void Chip::run() {
+  bool running = true;
+  while(running) {
+    display->render();
+  }
 }

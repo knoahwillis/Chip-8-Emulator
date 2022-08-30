@@ -16,6 +16,6 @@ public:
   ~Display();
 
 public:
-  // void render();
+  void render();
   void clear();
 };
