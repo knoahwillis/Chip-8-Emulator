@@ -25,7 +25,7 @@ void Display::clear() {
   }
 }
 
-void Display::render() {
+void Display::renderFrame() {
   SDL_SetRenderDrawColor(rend, 255, 255, 255, 0);
   for (int i = 0; i < width; i++) {
     for (int j = 0; j < height; j++) {

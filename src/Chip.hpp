@@ -2,6 +2,7 @@
 
 #include "Interpreter.hpp"
 #include <cstdint>
+#include <string>
 
 class Chip {
 protected:
@@ -21,12 +22,15 @@ protected:
   Display *display;
   Interpreter *interpreter;
 
+  bool running;
+
 public:
-  Chip();
+  Chip(std::string rom);
   ~Chip();
 
 public:
   void run();
+  void loadRom(std::string rom, int start);
 
 protected:
   void handleIns();

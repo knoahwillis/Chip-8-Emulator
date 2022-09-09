@@ -64,12 +64,21 @@ public:
   // C
   void rndCxkk(uate Vx, uate kk);
   // D
-  void drwDxyn();
+  void drwDxyn(); 
   // E
-  void skpEx9E();
-  void sknpExA1();
+  // void skpEx9E(); //TODO
+  // void sknpExA1(); //TODO
   // F
-  void ldFx07();
+  void ldFx07(uate Vx);
+  // void ldFx0A(); //TODO
+  void ldFx15(uate Vx);
+  void ldFx18(uate Vx);
+  void addFx1E(uate Vx);
+  void ldFx29(uate Vx);
+  void ldFx33(uate Vx);
+  void ldFx55(uate Vx);
+  void ldFx65(uate Vx);
+
 
 
 
