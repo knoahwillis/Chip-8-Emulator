@@ -4,7 +4,7 @@ PCXXSRC := $(wildcard src/*.cpp)
 
 PCXXOBJ := $(PCXXSRC:.cpp=.o)
 
-CXXFLAGS += -std=c++14 -O2 -g -Wall -Wpedantic
+CXXFLAGS += -std=c++17 -O2 -g -Wall -Wpedantic
 
 LDLIBS += 
 

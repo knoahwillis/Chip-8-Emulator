@@ -45,7 +45,7 @@ Chip::~Chip() {
 
 void Chip::run() {
   while (running) {
-    display->render();
+    display->renderFrame();
   }
 }
 
