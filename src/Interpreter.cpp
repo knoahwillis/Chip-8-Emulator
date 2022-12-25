@@ -2,9 +2,7 @@
 #include <ctime>
 #include <random>
 
-Interpreter::Interpreter(uate *memory, uate *V, usix *I, uate *delay,
-                         uate *sound, usix *programCounter, uate *stackPointer,
-                         usix *stack, Display *display) {
+Interpreter::Interpreter(uate* memory, uate* V, usix* I, uate* delay, uate* sound, usix* programCounter, uate* stackPointer, usix* stack, Display* display) {
   this->memory = memory;
   this->V = V;
   this->I = I;
@@ -16,7 +14,7 @@ Interpreter::Interpreter(uate *memory, uate *V, usix *I, uate *delay,
   this->display = display;
 }
 
-void Interpreter::sys0nnn() { ; }
+void Interpreter::sys0nnn() {}
 
 void Interpreter::cls00E0() { display->clear(); }
 
@@ -25,7 +23,7 @@ void Interpreter::ret00EE() {
   *stackPointer--;
 }
 
-void Interpreter::jp1nnn(usix nnn) { *programCounter = nnn; }
+void Interpreter::jp1nnn(usix nnn) { *programCounter = nnn - 2; }
 
 void Interpreter::call2nnn(usix nnn) {
   if (*stackPointer == 0xF) {
@@ -34,7 +32,7 @@ void Interpreter::call2nnn(usix nnn) {
     *stackPointer++;
   }
   *(stack + *stackPointer) = *programCounter;
-  *programCounter = nnn;
+  *programCounter = nnn - 2;
 }
 
 void Interpreter::se3xkk(uate Vx, uate kk) {
@@ -61,17 +59,11 @@ void Interpreter::add7xkk(uate Vx, uate kk) { *(V + Vx) += kk; }
 
 void Interpreter::ld8xy0(uate Vx, uate Vy) { *(V + Vx) = *(V + Vy); }
 
-void Interpreter::or8xy1(uate Vx, uate Vy) {
-  *(V + Vx) = *(V + Vx) | *(V + Vy);
-}
+void Interpreter::or8xy1(uate Vx, uate Vy) { *(V + Vx) = *(V + Vx) | *(V + Vy); }
 
-void Interpreter::and8xy2(uate Vx, uate Vy) {
-  *(V + Vx) = *(V + Vx) & *(V + Vy);
-}
+void Interpreter::and8xy2(uate Vx, uate Vy) { *(V + Vx) = *(V + Vx) & *(V + Vy); }
 
-void Interpreter::xor8xy3(uate Vx, uate Vy) {
-  *(V + Vx) = *(V + Vx) ^ *(V + Vy);
-}
+void Interpreter::xor8xy3(uate Vx, uate Vy) { *(V + Vx) = *(V + Vx) ^ *(V + Vy); }
 
 void Interpreter::add8xy4(uate Vx, uate Vy) {
   if (Vx + Vy > 0xFF) {
@@ -128,11 +120,55 @@ void Interpreter::rndCxkk(uate Vx, uate kk) {
   *(V + Vx) = rando & kk;
 }
 
-void Interpreter::drwDxyn() {
-  
+void Interpreter::drwDxyn(uate Vx, uate Vy, uate nnn) {
+  int x = *(V + Vx) + 7;
+  int y = *(V + Vy);
+  for (uate i = 0; i < nnn; i++) {
+    uate curr = *(memory + *I + i);
+    for (int j = 0; j < 8; j++) {
+      int val = (curr >> j) & 0x1;
+      int cX = x;
+      int cY = y;
+      if (cX > 64) {
+        cX -= 64;
+      } else if (cX < 0) {
+        cX += 64;
+      }
+      if (cY > 32) {
+        cY -= 32;
+      } else if (cY < 0) {
+        cY += 32;
+      }
+      display->xorAtPoint(cX, cY, val);
+      x--;
+    }
+    x = *(V + Vx) + 7;
+    y++;
+  }
+}
+
+void Interpreter::skpEx9E(uate Vx) {
+  if (display->getKeyPress(static_cast<int>(*(V + Vx)))) {
+    *programCounter += 2;
+  }
+}
+
+void Interpreter::sknpExA1(uate Vx) {
+  if (!display->getKeyPress(static_cast<int>(*(V + Vx)))) {
+    *programCounter += 2;
+  }
 }
 
 void Interpreter::ldFx07(uate Vx) { *(V + Vx) = *delay; }
+
+void Interpreter::ldFx0A(uate Vx) {
+  int check = display->getAnyKey();
+  if (check == -1) {
+    *programCounter -= 2;
+  } else {
+    *(V + Vx) = check;
+  }
+}
 
 void Interpreter::ldFx15(uate Vx) { *delay = *(V + Vx); }
 

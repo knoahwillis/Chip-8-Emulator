@@ -5,7 +5,7 @@
 #include <string>
 
 class Chip {
-protected:
+  protected:
   uate memory[4096]; //
 
   uate V[16]; // 8-bit registers
@@ -19,19 +19,38 @@ protected:
 
   usix stack[16]; // stores the addresses that the interpreter shoudl return to
                   // after finishing a subroutine
-  Display *display;
-  Interpreter *interpreter;
+  Display* display;
+  Interpreter* interpreter;
 
   bool running;
 
-public:
+  public:
   Chip(std::string rom);
   ~Chip();
 
-public:
   void run();
-  void loadRom(std::string rom, int start);
 
-protected:
-  void handleIns();
+  protected:
+  void loadRom(std::string rom, int start);
+  void handleIns(uate Vx, uate Vy);
+
+  void handle0(usix bytes[4]);
+  void handle1(usix bytes[4]);
+  void handle2(usix bytes[4]);
+  void handle3(usix bytes[4]);
+  void handle4(usix bytes[4]);
+  void handle5(usix bytes[4]);
+  void handle6(usix bytes[4]);
+  void handle7(usix bytes[4]);
+  void handle8(usix bytes[4]);
+  void handle9(usix bytes[4]);
+  void handleA(usix bytes[4]);
+  void handleB(usix bytes[4]);
+  void handleC(usix bytes[4]);
+  void handleD(usix bytes[4]);
+  void handleE(usix bytes[4]);
+  void handleF(usix bytes[4]);
+
+  bool compBytes(usix bytes[4], std::string instr);
+  usix c2u(char c);
 };

@@ -5,28 +5,27 @@ using usix = uint16_t;
 using uate = uint8_t;
 
 class Interpreter {
-protected:
-  uate *memory;
+  protected:
+  uate* memory;
 
-  uate *V;
-  usix *I;
+  uate* V;
+  usix* I;
 
-  uate *delay;
-  uate *sound;
+  uate* delay;
+  uate* sound;
 
-  usix *programCounter;
-  uate *stackPointer;
+  usix* programCounter;
+  uate* stackPointer;
 
-  usix *stack;
+  usix* stack;
 
-  Display *display;
+  Display* display;
 
-public:
-  Interpreter(uate *memory, uate *V, usix *I, uate *delay, uate *sound,
-              usix *programCounter, uate *stackPointer, usix *stack,
-              Display *display);
-  ~Interpreter();
-public:
+  public:
+  Interpreter(uate* memory, uate* V, usix* I, uate* delay, uate* sound, usix* programCounter, uate* stackPointer, usix* stack, Display* display);
+  ~Interpreter() {}
+
+  public:
   // 0
   void sys0nnn();
   void cls00E0();
@@ -64,13 +63,13 @@ public:
   // C
   void rndCxkk(uate Vx, uate kk);
   // D
-  void drwDxyn(); 
+  void drwDxyn(uate Vx, uate Vy, uate nnn);
   // E
-  // void skpEx9E(); //TODO
-  // void sknpExA1(); //TODO
+  void skpEx9E(uate Vx);
+  void sknpExA1(uate Vx);
   // F
   void ldFx07(uate Vx);
-  // void ldFx0A(); //TODO
+  void ldFx0A(uate Vx);
   void ldFx15(uate Vx);
   void ldFx18(uate Vx);
   void addFx1E(uate Vx);
@@ -78,8 +77,4 @@ public:
   void ldFx33(uate Vx);
   void ldFx55(uate Vx);
   void ldFx65(uate Vx);
-
-
-
-
 };

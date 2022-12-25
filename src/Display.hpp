@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL2/SDL.h>
+#include <chrono>
 
 enum Keyboard {
   ZERO = SDL_SCANCODE_X,
@@ -21,20 +22,28 @@ enum Keyboard {
 };
 
 class Display {
-protected:
-  SDL_Renderer *rend;
-  SDL_Window *window;
+  protected:
+  SDL_Renderer* rend;
+  SDL_Window* window;
+  bool running;
 
   const int width = 64;
   const int height = 32;
 
-  bool screen[32][64];
+  int screen[32][64];
+  bool keysPressed[0xF + 1];
 
-public:
+  std::chrono::steady_clock::time_point startTime;
+  std::chrono::steady_clock::time_point endTime;
+
+  public:
   Display();
   ~Display();
 
-public:
-  void renderFrame();
+  void beginFrame();
+  void endFrame();
   void clear();
+  int xorAtPoint(int x, int y, int value);
+  bool getKeyPress(int key);
+  int getAnyKey();
 };
