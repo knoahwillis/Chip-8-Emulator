@@ -3,7 +3,7 @@
 #include <thread>
 
 Display::Display() {
-  window = SDL_CreateWindow("Chip-8", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN);
+  window = SDL_CreateWindow("Chip-8", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width * 10, height * 10, SDL_WINDOW_SHOWN);
   rend = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
   for (int i = 0; i < width; i++) {
     for (int j = 0; j < width; j++) {
@@ -26,7 +26,7 @@ void Display::clear() {
 }
 
 void Display::beginFrame() {
-  startTime = std::chrono::high_resolution_clock::now();
+  startTime = std::chrono::system_clock::now();
   SDL_SetRenderDrawColor(rend, 0, 0, 0, 255);
   SDL_RenderClear(rend);
 
@@ -155,7 +155,7 @@ void Display::endFrame() {
   for (int x = 0; x < width; x++) {
     for (int y = 0; y < height; y++) {
       if (screen[x][y] != 0) {
-        SDL_Rect temp = {x, y, 10, 10};
+        SDL_Rect temp = {x * 10, y * 10, 10, 10};
         SDL_SetRenderDrawColor(rend, 255, 255, 255, 255);
         SDL_RenderFillRect(rend, &temp);
       }
@@ -163,7 +163,7 @@ void Display::endFrame() {
   }
 
   SDL_RenderPresent(rend);
-  endTime = std::chrono::high_resolution_clock::now();
+  endTime = std::chrono::system_clock::now();
   auto diff = std::chrono::duration_cast<std::chrono::microseconds>(endTime - startTime).count();
   if (diff < 16667) {
     std::this_thread::sleep_for(std::chrono::microseconds(16667 - diff));

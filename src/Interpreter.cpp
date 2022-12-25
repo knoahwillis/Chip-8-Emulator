@@ -20,7 +20,7 @@ void Interpreter::cls00E0() { display->clear(); }
 
 void Interpreter::ret00EE() {
   *programCounter = *(stack + *stackPointer);
-  *stackPointer--;
+  *stackPointer -= 1;
 }
 
 void Interpreter::jp1nnn(usix nnn) { *programCounter = nnn - 2; }
@@ -29,7 +29,7 @@ void Interpreter::call2nnn(usix nnn) {
   if (*stackPointer == 0xF) {
     *stackPointer = 0x0;
   } else {
-    *stackPointer++;
+    *stackPointer += 1;
   }
   *(stack + *stackPointer) = *programCounter;
   *programCounter = nnn - 2;

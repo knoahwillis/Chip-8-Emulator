@@ -33,8 +33,8 @@ class Display {
   int screen[32][64];
   bool keysPressed[0xF + 1];
 
-  std::chrono::steady_clock::time_point startTime;
-  std::chrono::steady_clock::time_point endTime;
+  std::chrono::system_clock::time_point startTime;
+  std::chrono::system_clock::time_point endTime;
 
   public:
   Display();
