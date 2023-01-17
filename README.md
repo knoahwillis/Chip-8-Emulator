@@ -6,7 +6,7 @@ Based on [Cowgod's Chip-8 Reference](http://devernay.free.fr/hacks/chip8/C8TECH1
 
 ## Usage
 
-`./chip8 [-s scale] [path-to-rom]`  
+`./Chip-8 `  
 A good source of roms is [dmatlack/chip8/roms](https://github.com/dmatlack/chip8/tree/master/roms)  
 
 ### Key layout
@@ -17,6 +17,6 @@ A good source of roms is [dmatlack/chip8/roms](https://github.com/dmatlack/chip8
     z x c v          A 0 B F  
 Escape closes the emulator  
 
-## Yet to be done
+## Incomplete
 
 - sound
