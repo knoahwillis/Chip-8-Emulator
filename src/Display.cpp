@@ -10,6 +10,10 @@ Display::Display() {
       screen[i][j] = 0;
     }
   }
+
+  for (int i = 0; i <= 0xF; i++) {
+    keysPressed[i] = false;
+  }
 }
 
 Display::~Display() {

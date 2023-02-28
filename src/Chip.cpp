@@ -49,7 +49,7 @@ void Chip::run() {
       running = false;
     }
 
-    programCounter += 1;
+    programCounter += 2;
 
     if (delay != 0) {
       delay -= 1;

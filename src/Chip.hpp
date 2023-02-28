@@ -6,7 +6,7 @@
 
 class Chip {
   protected:
-  uate memory[4096]; //
+  uate memory[0xFFF + 1]; //
 
   uate V[16]; // 8-bit registers
   usix I;     // generally stores memory addresses

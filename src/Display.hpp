@@ -30,7 +30,7 @@ class Display {
   const int width = 64;
   const int height = 32;
 
-  int screen[32][64];
+  int screen[62][32];
   bool keysPressed[0xF + 1];
 
   std::chrono::system_clock::time_point startTime;

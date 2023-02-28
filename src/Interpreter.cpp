@@ -14,7 +14,9 @@ Interpreter::Interpreter(uate* memory, uate* V, usix* I, uate* delay, uate* soun
   this->display = display;
 }
 
-void Interpreter::sys0nnn() {}
+void Interpreter::sys0nnn() {
+  return;
+}
 
 void Interpreter::cls00E0() { display->clear(); }
 
@@ -65,17 +67,24 @@ void Interpreter::and8xy2(uate Vx, uate Vy) { *(V + Vx) = *(V + Vx) & *(V + Vy);
 
 void Interpreter::xor8xy3(uate Vx, uate Vy) { *(V + Vx) = *(V + Vx) ^ *(V + Vy); }
 
+// void Interpreter::add8xy4(uate Vx, uate Vy) {
+//   if (Vx + Vy > 0xFF) {
+//     *(V + 0xF) = 1;
+//     *(V + Vx) = 0xFF;
+//   } else {
+//     *(V + Vx) += *(V + Vy);
+//   }
+// }
+
 void Interpreter::add8xy4(uate Vx, uate Vy) {
-  if (Vx + Vy > 0xFF) {
+  if (*(V + Vx) + *(V + Vy) > 0xFF) {
     *(V + 0xF) = 1;
-    *(V + Vx) = 0xFF;
-  } else {
-    *(V + Vx) += *(V + Vy);
   }
+  *(V + Vx) = static_cast<uate>(*(V + Vx) + *(V + Vy) & 0xFF);
 }
 
 void Interpreter::sub8xy5(uate Vx, uate Vy) {
-  if (*(V + Vx) > *(V + Vy)) {
+  if (*(V + Vx) >= *(V + Vy)) {
     *(V + 0xF) = 1;
   } else {
     *(V + 0xF) = 0;
@@ -90,7 +99,7 @@ void Interpreter::shr8xy6(uate Vx, uate Vy) {
 }
 
 void Interpreter::subn8xy7(uate Vx, uate Vy) {
-  if (*(V + Vy) > *(V + Vx)) {
+  if (*(V + Vy) >= *(V + Vx)) {
     *(V + 0xF) = 1;
   } else {
     *(V + 0xF) = 0;
@@ -110,9 +119,9 @@ void Interpreter::sne9xy0(uate Vx, uate Vy) {
   }
 }
 
-void Interpreter::ldAnnn(usix nnn) { *I = nnn; }
+void Interpreter::ldAnnn(usix nnn) { *I = nnn & 0xFFF; }
 
-void Interpreter::jpBnnn(usix nnn) { *programCounter = nnn + *V; }
+void Interpreter::jpBnnn(usix nnn) { *programCounter = nnn + *V - 2; }
 
 void Interpreter::rndCxkk(uate Vx, uate kk) {
   srand(time(0));
