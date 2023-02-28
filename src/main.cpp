@@ -10,8 +10,8 @@ int main(int argc, char* argv[]) {
 
   std::string romPath(argv[1]);
 
-  Chip emulator(romPath);
-  emulator.run();
+  std::unique_ptr<Chip> emulator = std::make_unique<Chip>(romPath);
+  emulator->run();
 
   return 0;
 }

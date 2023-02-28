@@ -21,15 +21,15 @@ void Interpreter::sys0nnn() {
 void Interpreter::cls00E0() { display->clear(); }
 
 void Interpreter::ret00EE() {
-  *programCounter = *(stack + *stackPointer);
+  *programCounter = *(stack + (*stackPointer));
   *stackPointer -= 1;
 }
 
 void Interpreter::jp1nnn(usix nnn) { *programCounter = nnn - 2; }
 
 void Interpreter::call2nnn(usix nnn) {
-  if (*stackPointer == 0xF) {
-    *stackPointer = 0x0;
+  if (*stackPointer == static_cast<usix>(16)) {
+    *stackPointer = static_cast<usix>(0);
   } else {
     *stackPointer += 1;
   }
@@ -66,15 +66,6 @@ void Interpreter::or8xy1(uate Vx, uate Vy) { *(V + Vx) = *(V + Vx) | *(V + Vy); 
 void Interpreter::and8xy2(uate Vx, uate Vy) { *(V + Vx) = *(V + Vx) & *(V + Vy); }
 
 void Interpreter::xor8xy3(uate Vx, uate Vy) { *(V + Vx) = *(V + Vx) ^ *(V + Vy); }
-
-// void Interpreter::add8xy4(uate Vx, uate Vy) {
-//   if (Vx + Vy > 0xFF) {
-//     *(V + 0xF) = 1;
-//     *(V + Vx) = 0xFF;
-//   } else {
-//     *(V + Vx) += *(V + Vy);
-//   }
-// }
 
 void Interpreter::add8xy4(uate Vx, uate Vy) {
   if (*(V + Vx) + *(V + Vy) > 0xFF) {
@@ -121,7 +112,7 @@ void Interpreter::sne9xy0(uate Vx, uate Vy) {
 
 void Interpreter::ldAnnn(usix nnn) { *I = nnn & 0xFFF; }
 
-void Interpreter::jpBnnn(usix nnn) { *programCounter = nnn + *V - 2; }
+void Interpreter::jpBnnn(usix nnn) { *programCounter = nnn + *(V) - 2; }
 
 void Interpreter::rndCxkk(uate Vx, uate kk) {
   srand(time(0));

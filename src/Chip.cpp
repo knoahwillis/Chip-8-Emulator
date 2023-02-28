@@ -5,7 +5,7 @@
 
 Chip::Chip(std::string rom) {
 
-  display = new Display;
+  display = new Display(&running);
   interpreter = new Interpreter(&memory[0], &V[0], &I, &delay, &sound, &programCounter, &stackPointer, &stack[0], display);
 
   delay = 0;

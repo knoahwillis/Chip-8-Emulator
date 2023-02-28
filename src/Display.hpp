@@ -25,7 +25,7 @@ class Display {
   protected:
   SDL_Renderer* rend;
   SDL_Window* window;
-  bool running;
+  bool* running;
 
   const int width = 64;
   const int height = 32;
@@ -37,7 +37,7 @@ class Display {
   std::chrono::system_clock::time_point endTime;
 
   public:
-  Display();
+  Display(bool *r);
   ~Display();
 
   void beginFrame();

@@ -2,11 +2,12 @@
 
 #include <thread>
 
-Display::Display() {
+Display::Display(bool *r) {
+  SDL_Init(SDL_INIT_VIDEO);
   window = SDL_CreateWindow("Chip-8", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width * 10, height * 10, SDL_WINDOW_SHOWN);
   rend = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
   for (int i = 0; i < width; i++) {
-    for (int j = 0; j < width; j++) {
+    for (int j = 0; j < height; j++) {
       screen[i][j] = 0;
     }
   }
@@ -14,6 +15,8 @@ Display::Display() {
   for (int i = 0; i <= 0xF; i++) {
     keysPressed[i] = false;
   }
+
+  running = r;
 }
 
 Display::~Display() {
@@ -38,12 +41,12 @@ void Display::beginFrame() {
   while (SDL_PollEvent(&e)) {
     switch (e.type) {
     case SDL_QUIT:
-      running = false;
+      *running = false;
       break;
     case SDL_KEYDOWN:
       switch (e.key.keysym.scancode) {
       case SDL_SCANCODE_ESCAPE:
-        running = false;
+        *running = false;
         break;
       case static_cast<int>(Keyboard::ZERO):
         keysPressed[0] = true;
