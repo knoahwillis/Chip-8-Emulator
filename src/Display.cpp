@@ -2,9 +2,12 @@
 
 #include <thread>
 
-Display::Display(bool *r) {
+Display::Display(bool *r, int s) {
+  scale = s;
+  running = r;
+
   SDL_Init(SDL_INIT_VIDEO);
-  window = SDL_CreateWindow("Chip-8", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width * 10, height * 10, SDL_WINDOW_SHOWN);
+  window = SDL_CreateWindow("Chip-8", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width * scale, height * scale, SDL_WINDOW_SHOWN);
   rend = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
   for (int i = 0; i < width; i++) {
     for (int j = 0; j < height; j++) {
@@ -15,8 +18,6 @@ Display::Display(bool *r) {
   for (int i = 0; i <= 0xF; i++) {
     keysPressed[i] = false;
   }
-
-  running = r;
 }
 
 Display::~Display() {
@@ -162,7 +163,7 @@ void Display::endFrame() {
   for (int x = 0; x < width; x++) {
     for (int y = 0; y < height; y++) {
       if (screen[x][y] != 0) {
-        SDL_Rect temp = {x * 10, y * 10, 10, 10};
+        SDL_Rect temp = {x * scale, y * scale, scale, scale};
         SDL_SetRenderDrawColor(rend, 255, 255, 255, 255);
         SDL_RenderFillRect(rend, &temp);
       }

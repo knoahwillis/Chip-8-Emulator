@@ -29,15 +29,16 @@ class Display {
 
   const int width = 64;
   const int height = 32;
+  int scale;
 
-  int screen[62][32];
+  int screen[64][32];
   bool keysPressed[0xF + 1];
 
   std::chrono::system_clock::time_point startTime;
   std::chrono::system_clock::time_point endTime;
 
   public:
-  Display(bool *r);
+  Display(bool *r, int s);
   ~Display();
 
   void beginFrame();

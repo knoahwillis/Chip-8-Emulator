@@ -25,7 +25,7 @@ class Chip {
   bool running;
 
   public:
-  Chip(std::string rom);
+  Chip(std::string rom, int scale);
   ~Chip();
 
   void run();

@@ -3,9 +3,9 @@
 #include <iostream>
 #include <sstream>
 
-Chip::Chip(std::string rom) {
+Chip::Chip(std::string rom, int scale) {
 
-  display = new Display(&running);
+  display = new Display(&running, scale);
   interpreter = new Interpreter(&memory[0], &V[0], &I, &delay, &sound, &programCounter, &stackPointer, &stack[0], display);
 
   delay = 0;
